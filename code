@@ -1,0 +1,79 @@
+
+int xPin=A0;
+int yPin=A1;
+
+int out1=8;     //output1 for HT12E IC
+int out2=9;     //output1 for HT12E IC
+int out3=10;    //output1 for HT12E IC
+int out4=11;    //output1 for HT12E IC
+
+void setup(){
+  pinMode(xPin,INPUT);
+  pinMode(yPin,INPUT);
+
+  pinMode(out1,OUTPUT);
+  pinMode(out2,OUTPUT);
+  pinMode(out3,OUTPUT);
+  pinMode(out4,OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop() 
+{
+  int xval=analogRead(xPin);
+  int yval=analogRead(yPin);
+  Serial.println(xval);
+  Serial.println("\t");
+  Serial.println(yval);
+  Serial.println("\n");
+  delay(1000);
+
+  if ((xval>340 && xval<360) && (yval>350 && yval<370))    //stop
+  {
+    Serial.println("\t STOP");
+    digitalWrite(out1,LOW);  
+    digitalWrite(out2,LOW);   
+    digitalWrite(out3,LOW);   
+    digitalWrite(out4,LOW);
+   
+  } 
+
+    if ((xval<340 ) && (yval>350 && yval<370))   //forward
+   {
+    Serial.println("\t FORWARD");
+     digitalWrite(out1,HIGH);  
+     digitalWrite(out2,LOW);   
+     digitalWrite(out3,HIGH);  
+     digitalWrite(out4,LOW);
+    }
+    if ((xval>360) && (yval>350 && yval<370))     //backward
+  {
+    Serial.println("\t BACKWARD");
+   digitalWrite(out1,LOW);   
+   digitalWrite(out2,HIGH);  
+   digitalWrite(out3,LOW);   
+   digitalWrite(out4,HIGH);
+ 
+    }   
+
+    if ((xval>340 && xval<360) && ( yval<350))    //left
+    {
+      Serial.println("\t LEFT");
+      digitalWrite(out1,HIGH);  
+      digitalWrite(out2,LOW);   
+      digitalWrite(out3,LOW);   
+      digitalWrite(out4,LOW);
+    
+     }
+
+
+    if ((xval>340 && xval<360) && (yval>370))     //right
+    {
+      Serial.println("\t RIGHT");
+      digitalWrite(out1,LOW);  
+      digitalWrite(out2,LOW);   
+      digitalWrite(out3,HIGH);   
+      digitalWrite(out4,LOW);
+    }
+}
